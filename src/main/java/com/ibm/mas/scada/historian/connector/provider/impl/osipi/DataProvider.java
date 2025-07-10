@@ -66,7 +66,7 @@ public class DataProvider {
         String schema = historian.getString("schema");
         String database = historian.getString("database");
 
-        sqlQueryTemplate = "SELECT * FROM " + schema + "." + database + " where time >= '%s.000' and time < '%s.000';";
+        sqlQueryTemplate = "SELECT *, FORMAT(time,'yyyy-MM-dd HH:mm:ss.fff') time_formatted FROM " + schema + "." + database + " where time >= '%s.000' and time < '%s.000';";
 
         dbUser = historian.getString("user");
         dbPass = historian.getString("password");
@@ -244,7 +244,7 @@ public class DataProvider {
 
             // System.out.println(String.format("tagId=%s tagPath=%s value=%s", tagid, td.getTagPath(), value));
 
-            String evtts = rs.getString("time");
+            String evtts = rs.getString("time_formatted");
             String tmString = td.getMetrics();
             JSONObject tm = new JSONObject(tmString);
             String [] iotData = new String[Constants.IOTP_OSIPI_TOTAL];
